@@ -1,9 +1,9 @@
 #!/bin/bash
 
 EXPORT_FILENAME='symfony_tables.sql'
-STRING_START='ez'
+STRING_START='ez%'
 
-while getopts ":u:p:h:d:" opt; do
+while getopts ":u:p:h:d:f:s:" opt; do
   case $opt in
     u)
       USER=$OPTARG
@@ -27,7 +27,7 @@ while getopts ":u:p:h:d:" opt; do
       ;;
     s)
       STRING_START=$OPTARG
-      echo "NOT LIKE set with parameter: $DATABASE" >&2
+      echo "NOT LIKE set with parameter: $STRING_START" >&2
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -45,5 +45,5 @@ SQL="${SQL} FROM information_schema.tables"
 SQL="${SQL} WHERE table_schema = '${DATABASE}'"
 SQL="${SQL} AND table_name NOT LIKE '${STRING_START}';"
 TABLES=`mysql -u ${USER} -p${PASSWORD} -h${HOST} -AN -e"${SQL}"`
-
+echo "Tables to export: $TABLES"
 mysqldump -u ${USER} -p${PASSWORD} -h${HOST} ${DATABASE} ${TABLES} > ${EXPORT_FILENAME}
