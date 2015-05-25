@@ -23,7 +23,7 @@ while getopts ":u:p:h:d:f:s:" opt; do
       ;;
     f)
       EXPORT_FILENAME=$OPTARG
-      echo "Export file set, Parameter: $DATABASE" >&2
+      echo "Export file set, Parameter: $EXPORT_FILENAME" >&2
       ;;
     s)
       STRING_START=$OPTARG
