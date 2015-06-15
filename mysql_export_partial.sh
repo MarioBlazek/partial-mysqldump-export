@@ -43,7 +43,7 @@ done
 SQL="SELECT GROUP_CONCAT(table_name separator ' ')"
 SQL="${SQL} FROM information_schema.tables"
 SQL="${SQL} WHERE table_schema = '${DATABASE}'"
-SQL="${SQL} AND table_name NOT LIKE '${STRING_START}';"
+SQL="${SQL} AND table_name NOT LIKE '${STRING_START}%';"
 TABLES=`mysql -u ${USER} -p${PASSWORD} -h${HOST} -AN -e"${SQL}"`
 echo "Tables to export: $TABLES"
 mysqldump -u ${USER} -p${PASSWORD} -h${HOST} ${DATABASE} ${TABLES} > ${EXPORT_FILENAME}
